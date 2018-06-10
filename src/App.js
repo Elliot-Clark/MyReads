@@ -197,7 +197,6 @@ class BooksApp extends React.Component {
                 </div>
               </div>
             </div>
- 
               <Link
                 className="open-search"
                 to="/search"
