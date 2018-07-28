@@ -1,4 +1,4 @@
- import React from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import { Route } from 'react-router-dom'
 // import * as BooksAPI from './BooksAPI'
@@ -6,7 +6,7 @@ import './App.css'
 import { BrowserRouter } from 'react-router-dom'
 import Search from './search'
 import Web from './page'
-import BookShelf from './bookShelf'
+import BookShelf from './BookShelf'
 import * as BooksAPI from './BooksAPI'
 
 
@@ -90,8 +90,7 @@ import * as BooksAPI from './BooksAPI'
      */
 class BooksApp extends React.Component {
   state = {
-    books: []
-    
+    books: [] 
   }
  
 componentDidMount() {
@@ -99,7 +98,7 @@ componentDidMount() {
 )}
  
  
-changeShelf = (shelf, book) => {
+changeShelf = (shelf, book) => {  //Method to class, to change shelf. Send as prop.
   let copy = [...this.state.books];
   let index = this.state.books.findIndex(b => b.id == book.id);
 
