@@ -5,9 +5,9 @@ import { Route } from 'react-router-dom'
 import './App.css'
 import { BrowserRouter } from 'react-router-dom'
 import Search from './search'
-import Web from './page'
 import BookShelf from './BookShelf'
 import * as BooksAPI from './BooksAPI'
+
 
 
   
@@ -99,13 +99,15 @@ componentDidMount() {
  
  
 changeShelf = (shelf, book) => {  //Method to class, to change shelf. Send as prop.
-  let copy = [...this.state.books];
-  let index = this.state.books.findIndex(b => b.id == book.id);
-
+  BooksAPI.update(book, shelf).then(() => {
+    //Copy a copy of this.state.books into copy
+    let copy = [...this.state.books]; 
+    //Finding the book in this.state with the same id
+    let index = this.state.books.findIndex(b => b.id == book.id);
     copy[index].shelf = shelf;
-  this.setState({books: copy});
+    this.setState({books: copy});
+  })
 }
-
 
   render() {
     const CurrentlyReading = 0;
@@ -113,27 +115,10 @@ changeShelf = (shelf, book) => {  //Method to class, to change shelf. Send as pr
     const Read = 2;
    
     return (
+     <BrowserRouter>
       <div className="app">
         <Route path="/search" render={() => (
-          <div className="search-books">
-            <div className="search-books-bar">
-              <Link to="/" className="close-search">Close</Link>
-                <div className="search-books-input-wrapper">
-                {/*
-                  NOTES: The search from BooksAPI is limited to a particular set of search terms.
-                  You can find these search terms here:
-                  https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
-
-                  However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-                  you don't find a specific author or title. Every search is limited by search terms.
-                */}
-                      <input type="text" placeholder="Search by title or author"/>
-                    </div>
-                  </div>
-                <div className="search-books-results">
-              <ol className="books-grid"></ol>
-            </div>
-          </div>
+          <Search changeShelf = {this.changeShelf}/>
         )}/>
     
         <Route exact path="/" render={() => (
@@ -152,6 +137,7 @@ changeShelf = (shelf, book) => {  //Method to class, to change shelf. Send as pr
             </div> 
            )}/>
         </div>
+      </BrowserRouter>
     )
   }
 }

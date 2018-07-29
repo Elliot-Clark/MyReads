@@ -1,6 +1,5 @@
 import React from 'react'
 import './App.css'
-import ChangeShelf from './changeShelf'
 
   const bookshelf = () => {
     <div className="bookshelf">
