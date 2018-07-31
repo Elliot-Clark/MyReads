@@ -7,17 +7,28 @@ class Search extends Component {
   state = {
     SearchBooks: [] 
   }
-
-searchString = (event) => {
-  let searchText = event.target.value;
-  BooksAPI.search(searchText).then(data => {
-    this.setState({SearchBooks: data});
-      if(this.state.SearchBooks == []) {
-        console.log("Empty Array");
-      }
-    console.log(data);
+  
+  componentWillUnmount() {
+    this.setState({
+      SearchBooks: [], 
+    });
   }
-)}
+
+  searchString = (event) => {
+    let searchText = event.target.value;
+
+    if (searchText.length > 0) {
+      BooksAPI.search(searchText).then(data => {
+        if (data.length > 0 || searchText.length > 1) {
+          const copy = [...data];
+          copy.forEach(b => b.shelf = "none");
+          this.setState({SearchBooks: copy});
+        }
+      })
+    } else {
+      this.setState({SearchBooks: []});
+    }
+  }
 
   render() {
     return (
@@ -30,11 +41,10 @@ searchString = (event) => {
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-          
-             {this.state.SearchBooks.map(b => 
-              <Book book={b} changeShelf={this.props.changeShelf}/>
-            )}
-             
+             { this.state.SearchBooks.length > 0 ? 
+                 this.state.SearchBooks.map(b => 
+                 <Book book={b} changeShelf={this.props.changeShelf} key={b.id}/>
+            ) : "No Search Results" }
           </ol>
         </div>
       </div>

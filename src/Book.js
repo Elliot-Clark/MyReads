@@ -1,41 +1,27 @@
 import React from 'react';
 import './App.css';
+import ShelfChange from './ShelfChange';
 
-class Book extends React.Component {
-
+const Book = ({ book, changeShelf }) => {
   
-  handleChange = (event, book) => {
-    this.props.changeShelf(event.target.value, book);
-  };
+  let hw ={ height: 193, width: 128 };
+  let imageStyle=(book.imageLinks && book.imageLinks.thumbnail) ? 
+    {backgroundImage: `url(${book.imageLinks.thumbnail})`} : 
+    {backgroundImage: 'url("")'};
+  let style = {...hw, ...imageStyle};
 
-
-render () {
-  let style={
-    height: 193, 
-    width: 128, 
-    backgroundImage: `url(${this.props.book.imageLinks.thumbnail})`
-  };
   return (
    <li>
     <div className="book">
       <div className="book-top">
         <div className="book-cover" style={style}></div>
-        <div className="book-shelf-changer">
-          <select onChange={(event) => {this.handleChange(event, this.props.book)}}>
-          <option value="none">Move to...</option>
-          <option value="currentlyReading">Currently Reading</option>
-          <option value="wantToRead">Want to Read</option>
-          <option value="read">Read</option>
-          <option value="none">None</option>
-          </select>
-        </div>
+          <ShelfChange changeShelf={changeShelf} book={book}/>
       </div>
-      <div className="book-title">{this.props.book.title}</div>
-      <div className="book-authors">{this.props.book.authors}</div>
+      <div className="book-title">{book.title ? book.title : 'No Title'}</div>
+      <div className="book-authors">{book.authors ? book.authors : 'No Author'}</div>
     </div>
    </li>
   )
-}
 }
 
 export default Book;

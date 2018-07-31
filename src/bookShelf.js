@@ -17,23 +17,19 @@ const shelves = [{ shelf: "currentlyReading",
                  ];
 
 
-class BookShelf extends React.Component {
-render () {
-  return (
-    <div className="list-books-content">    
-      <div className="bookshelf">
-        <h2 className="bookshelf-title">{shelves.filter(shelf => shelf.shelf === this.props.shelf)[0].header}</h2>
-        <div className="bookshelf-books">
-          <ol className="books-grid">
-            {this.props.books.filter(book => book.shelf === this.props.shelf).map(b => 
-              <Book book = {b} changeShelf = {this.props.changeShelf}/>
-            )}
-          </ol>
-        </div>
+const BookShelf = ({ books, shelf, changeShelf }) => {
+  return (    
+    <div className="bookshelf">
+      <h2 className="bookshelf-title">{shelves.filter(s => s.shelf === shelf)[0].header}</h2>
+      <div className="bookshelf-books">
+        <ol className="books-grid">
+          {books.filter(book => book.shelf === shelf).map(b => 
+            <Book book={b} changeShelf={changeShelf} key={b.id}/>
+          )}
+        </ol>
       </div>
     </div>
   )
-  }
 }
 
 export default BookShelf;
