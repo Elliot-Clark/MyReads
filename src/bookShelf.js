@@ -1,20 +1,22 @@
 import React from 'react';
 import Book from './Book';
 
-const shelves = [{ shelf: "currentlyReading",
-                   header: "Currently Reading"
-                   },
-                   
-                   {
-                   shelf: "wantToRead",
-                   header: "Want to Read",
-                   },
-                   
-                   {
-                   shelf: "read",
-                   header: "Read"
-                   }
-                 ];
+const shelves = [
+  { 
+    shelf: "currentlyReading",
+    header: "Currently Reading"
+  },
+
+  {
+    shelf: "wantToRead",
+    header: "Want to Read",
+  },
+
+  {
+    shelf: "read",
+    header: "Read"
+  }
+];
 
 
 const BookShelf = ({ books, shelf, changeShelf }) => {
