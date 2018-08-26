@@ -4,7 +4,7 @@ import { Route } from 'react-router-dom'
 import './App.css'
 import { BrowserRouter } from 'react-router-dom'
 import Search from './search'
-import BookShelf from './BookShelf'
+import BookShelf from './bookShelf'
 import * as BooksAPI from './BooksAPI'
 
 class BooksApp extends React.Component {
@@ -43,7 +43,7 @@ class BooksApp extends React.Component {
      <BrowserRouter>
       <div className="app">
         <Route path="/search" render={() => (
-          <Search changeShelf = {this.changeShelf}/>
+          <Search books={this.state.books} changeShelf = {this.changeShelf}/>
         )}/>
         <Route exact path="/" render={() => (
           <div className="list-books">
@@ -60,7 +60,7 @@ class BooksApp extends React.Component {
               <Link
                 className="open-search"
                 to="/search"
-                ><a>Add a book</a>
+                ><div className="plus">Add a book</div>
               </Link>  
             </div> 
            )}/>

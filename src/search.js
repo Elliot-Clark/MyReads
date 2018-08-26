@@ -18,11 +18,16 @@ class Search extends Component {
     let searchText = event.target.value;
 
     if (searchText.length > 0) {
-      BooksAPI.search(searchText).then(data => {
-        if (data.length > 0 || searchText.length > 1) {
-          const copy = [...data];
-          copy.forEach(b => b.shelf = "none");
-          this.setState({SearchBooks: copy});
+      BooksAPI.search(searchText).then(books => {
+        if (books.length > 0 || searchText.length > 1) {
+          books.forEach((book, index) => {
+            const bookInMyList = this.props.books.find((b) => b.id === book.id);
+            book.shelf = bookInMyList ? bookInMyList.shelf : 'none';
+            books[index] = book;
+          });
+          this.setState({
+            SearchBooks: books
+          });
         }
       })
     } else {
